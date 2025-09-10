@@ -23,3 +23,10 @@ dependencyResolutionManagement {
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "GithubUsers"
 include(":app")
+include(":core")
+include(":features:search:search_data")
+include(":features:search:search_domain")
+include(":features:search:search_presentation")
+include(":features:detail:detail_data")
+include(":features:detail:detail_domain")
+include(":features:detail:detail_presentation")
