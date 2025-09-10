@@ -1,0 +1,92 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "44c225bb9b9c45cd404c5e7d09ab5359",
+    "entities": [
+      {
+        "tableName": "OilSelectionDataEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `iodine` REAL, `ins` REAL, `sap` REAL, `totalSaponifiable` REAL, `breakdown` TEXT NOT NULL, `properties` TEXT NOT NULL, `saturated` TEXT NOT NULL, `selected` INTEGER NOT NULL, `weight` REAL NOT NULL, `percentage` REAL NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "iodine",
+            "columnName": "iodine",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "ins",
+            "columnName": "ins",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "sap",
+            "columnName": "sap",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "totalSaponifiable",
+            "columnName": "totalSaponifiable",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "breakdown",
+            "columnName": "breakdown",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "properties",
+            "columnName": "properties",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "saturated",
+            "columnName": "saturated",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "selected",
+            "columnName": "selected",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "weight",
+            "columnName": "weight",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "percentage",
+            "columnName": "percentage",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '44c225bb9b9c45cd404c5e7d09ab5359')"
+    ]
+  }
+}

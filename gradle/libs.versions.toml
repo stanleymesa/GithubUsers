@@ -10,6 +10,7 @@ activityCompose = "1.10.1"
 composeBom = "2024.12.01"
 composePaging = "3.3.5"
 composeConstraintLayout = "1.1.0"
+composeNavigation = "2.9.0"
 appcompat = "1.7.0"
 material = "1.9.0"
 activity = "1.9.3"
@@ -44,7 +45,6 @@ compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = 
 compose-material3 = { group = "androidx.compose.material3", name = "material3-android" }
 compose-material3-windowsize = { group = "androidx.compose.material3", name = "material3-window-size-class" }
 compose-material-icon = { group = "androidx.compose.material", name = "material-icons-extended" }
-compose-navigation = { group = "androidx.navigation", name = "navigation-compose" }
 compose-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose" }
 compose-foundation = { group = "androidx.compose.foundation", name = "foundation-android" }
 compose-ui = { group = "androidx.compose.ui", name = "ui" }
@@ -54,6 +54,7 @@ compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling
 compose-ui-test = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavigation" }
 compose-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "composeConstraintLayout" }
 compose-paging = { group = "androidx.paging", name = "paging-compose", version.ref = "composePaging" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }

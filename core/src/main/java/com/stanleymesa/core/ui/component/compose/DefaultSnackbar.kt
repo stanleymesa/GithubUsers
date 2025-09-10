@@ -37,7 +37,7 @@ import com.stanleymesa.core.util.extentions.orResourceStringEmpty
 fun DefaultSnackbar(
     modifier: Modifier = Modifier,
     data: SnackbarData,
-    screenSize: ScreenSize
+    screenSize: ScreenSize = ScreenSize.NORMAL
 ) {
     runCatching {
         val snackbarData = data.visuals as DefaultSnackbarVisuals
