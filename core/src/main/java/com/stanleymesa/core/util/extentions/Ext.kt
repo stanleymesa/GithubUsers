@@ -40,10 +40,12 @@ import androidx.compose.ui.unit.IntSize
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
+import androidx.core.graphics.toColorInt
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import com.google.gson.GsonBuilder
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.stanleymesa.core.datastore.AppDataStoreKeys
 import com.stanleymesa.core.enums.Themes
 import okhttp3.internal.toHexString
@@ -52,14 +54,23 @@ import java.text.NumberFormat
 import kotlin.io.encoding.ExperimentalEncodingApi
 import kotlin.math.roundToLong
 import kotlin.random.Random
-import androidx.core.graphics.toColorInt
+
+
+// A reusable, private Moshi instance for better performance.
+private val moshiForPrettyPrint: Moshi = Moshi.Builder()
+    .add(KotlinJsonAdapterFactory())
+    .build()
 
 /**
- * Created by fizhu on 22,May,2020
- * Hvyz.anbiya@gmail.com
+ * Converts any object to a nicely formatted (indented) JSON string using Moshi.
  */
+fun Any.toJsonPretty(): String {
+    // Get an adapter for the Any type, then apply indentation.
+    val jsonAdapter = moshiForPrettyPrint.adapter(Any::class.java).indent("  ")
 
-fun Any.toJsonPretty(): String = GsonBuilder().setPrettyPrinting().create().toJson(this)
+    // Convert the object to a JSON string using the indented adapter.
+    return jsonAdapter.toJson(this)
+}
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = AppDataStoreKeys.APP_DATA_STORE_NAME)
 

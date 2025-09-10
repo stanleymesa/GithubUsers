@@ -1,20 +1,18 @@
 package com.stanleymesa.core.network
 
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.HttpException
-import java.lang.reflect.Type
+
 
 object NetworkExtension {
     fun <T> Throwable.returnErrorResource() = if (this is HttpException) {
         val errorStr = this.response()?.errorBody()?.string()
         if (errorStr != null) {
             try {
-                val type: Type = object : TypeToken<BaseResponse<Any>>() {}.type
-                val err = Gson().fromJson<BaseResponse<Any>>(
-                    errorStr,
-                    type
-                )
+                val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+                val jsonAdapter = moshi.adapter(BaseResponse::class.java)
+                val err = jsonAdapter.fromJson(errorStr) as BaseResponse<*>
                 if (this.code() == 401) {
                     Resource.Unauthorized<T>(err.message)
                 } else {
@@ -38,11 +36,9 @@ object NetworkExtension {
         val errorStr = this.response()?.errorBody()?.string()
         if (errorStr != null) {
             try {
-                val type: Type = object : TypeToken<BaseResponse<Any>>() {}.type
-                val err = Gson().fromJson<BaseResponse<Any>>(
-                    errorStr,
-                    type
-                )
+                val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+                val jsonAdapter = moshi.adapter(BaseResponse::class.java)
+                val err = jsonAdapter.fromJson(errorStr) as BaseResponse<*>
                 if (this.code() == 401) {
                     ResourcePaging.Unauthorized<T>(err.message)
                 } else {

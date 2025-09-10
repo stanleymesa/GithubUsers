@@ -8,7 +8,7 @@ import android.os.Parcelable
 import android.provider.OpenableColumns
 import android.webkit.MimeTypeMap
 import androidx.annotation.Keep
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -180,17 +180,17 @@ object FileUtils {
     @Keep
     @kotlinx.parcelize.Parcelize
     data class FileData(
-        @SerializedName("mime")
+        @Json(name = "mime")
         var mime: @kotlinx.parcelize.RawValue String? = null,
-        @SerializedName("uri")
+        @Json(name = "uri")
         var uri: @kotlinx.parcelize.RawValue Uri? = null,
-        @SerializedName("name")
+        @Json(name = "name")
         var name: @kotlinx.parcelize.RawValue String? = null,
-        @SerializedName("size")
+        @Json(name = "size")
         var size: @kotlinx.parcelize.RawValue Long? = null,
-        @SerializedName("file")
+        @Json(name = "file")
         var file: File? = null,
-        @SerializedName("id")
+        @Json(name = "id")
         var id: Int = 0
     ) : Parcelable
 

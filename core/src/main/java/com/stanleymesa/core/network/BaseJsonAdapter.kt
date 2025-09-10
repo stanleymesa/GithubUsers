@@ -1,43 +1,47 @@
 package com.stanleymesa.core.network
 
-import com.google.gson.TypeAdapter
-import com.google.gson.internal.LinkedTreeMap
-import com.google.gson.stream.JsonReader
-import com.google.gson.stream.JsonToken
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.JsonReader
+import com.squareup.moshi.JsonWriter
+import java.io.IOException
 
-abstract class BaseJsonAdapter<T> : TypeAdapter<T>() {
+abstract class BaseJsonAdapter<T> : JsonAdapter<T>() {
 
     internal fun readObject(reader: JsonReader): Any? {
         return when (reader.peek()) {
-            JsonToken.BEGIN_ARRAY -> {
-                val list: MutableList<Any?> = java.util.ArrayList()
+            JsonReader.Token.BEGIN_ARRAY -> {
+                val list = mutableListOf<Any?>()
                 reader.beginArray()
                 while (reader.hasNext()) {
-                    list.add(readObject(reader))
+                    list.add(readObject(reader)) // Recursive call to the helper method
                 }
                 reader.endArray()
                 list
             }
 
-            JsonToken.BEGIN_OBJECT -> {
-                val map: MutableMap<String, Any?> = LinkedTreeMap()
+            JsonReader.Token.BEGIN_OBJECT -> {
+                val map = linkedMapOf<String, Any?>()
                 reader.beginObject()
                 while (reader.hasNext()) {
-                    map[reader.nextName()] = readObject(reader)
+                    map[reader.nextName()] = readObject(reader) // Recursive call
                 }
                 reader.endObject()
                 map
             }
 
-            JsonToken.STRING -> reader.nextString()
-            JsonToken.NUMBER -> reader.nextDouble()
-            JsonToken.BOOLEAN -> reader.nextBoolean()
-            JsonToken.NULL -> {
-                reader.nextNull()
-                null
-            }
+            JsonReader.Token.STRING -> reader.nextString()
+            JsonReader.Token.NUMBER -> reader.nextDouble()
+            JsonReader.Token.BOOLEAN -> reader.nextBoolean()
+            JsonReader.Token.NULL -> reader.nextNull()
 
-            else -> throw IllegalStateException()
+            else -> throw IllegalStateException("Unexpected token: ${reader.peek()}")
         }
+    }
+
+    // The toJson method is required, but we'll leave it unimplemented
+    // as the focus is on reading JSON.
+    @Throws(IOException::class)
+    override fun toJson(writer: JsonWriter, value: T?) {
+        throw UnsupportedOperationException("BaseJsonAdapter is only used for deserialization.")
     }
 }

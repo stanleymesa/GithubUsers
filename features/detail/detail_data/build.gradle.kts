@@ -10,6 +10,5 @@ dependencies {
     "implementation"(libs.room)
     "implementation"(libs.room.ktx)
     "implementation"(libs.retrofit)
-    "implementation"(libs.retrofit.converter.gson)
     "kapt"(libs.room.compiler)
 }

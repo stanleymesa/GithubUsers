@@ -1,35 +1,37 @@
 package com.stanleymesa.core.network
 
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class BaseResponse<T>(
-    @Expose @SerializedName("code")
+    @Json(name = "code")
     val code: Int? = null,
-    @Expose @SerializedName("error")
+    @Json(name = "error")
     val error: Boolean = false,
-    @Expose @SerializedName("message")
+    @Json(name = "message")
     val message: String? = null,
-    @Expose @SerializedName("data")
+    @Json(name = "data")
     val data: T? = null,
 )
 
+@JsonClass(generateAdapter = true)
 data class BaseListResponse<T>(
-    @Expose @SerializedName("code")
+    @Json(name = "code")
     val code: Int? = null,
-    @Expose @SerializedName("error")
+    @Json(name = "error")
     val error: Boolean = false,
-    @Expose @SerializedName("message")
+    @Json(name = "message")
     val message: String? = null,
-    @Expose @SerializedName("data")
+    @Json(name = "data")
     val data: List<T>? = null,
-    @Expose @SerializedName("arrayCount")
+    @Json(name = "arrayCount")
     val arrayCount: Int? = null,
-    @Expose @SerializedName("totalItems")
+    @Json(name = "totalItems")
     val totalItems: Int? = null,
-    @Expose @SerializedName("pageSize")
+    @Json(name = "pageSize")
     val pageSize: Int? = null,
-    @Expose @SerializedName("isHasNextPage")
+    @Json(name = "isHasNextPage")
     val isHasNextPage: Boolean? = null,
 )
 

@@ -113,7 +113,8 @@ dependencies {
     implementation(libs.timber)
     implementation(libs.appcompat)
     implementation(libs.fragment)
-    implementation(libs.gson)
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
     implementation(libs.kotlinx.serialization.core)
     implementation(libs.kotlinx.serialization.json)
 
