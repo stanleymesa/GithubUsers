@@ -4,19 +4,29 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.stanleymesa.core.util.NetworkHelper
+import com.stanleymesa.core.util.extentions.loge
+import com.stanleymesa.search_domain.use_case.SearchUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-//    private val useCases: AnnouncementUseCases,
+    private val useCases: SearchUseCases,
     private val dataStore: DataStore<Preferences>,
     private val networkHelper: NetworkHelper,
 ) : ViewModel() {
@@ -28,11 +38,11 @@ class SearchViewModel @Inject constructor(
     private var snackbarJob: Job? = null
     private var refreshJob: Job? = null
 
-//    @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
-//    val announcements = state.value.payload.debounce { 250 }.flatMapLatest { payload ->
-//        useCases.getAnnouncementPaging(payload)
-//    }.cachedIn(viewModelScope)
-//        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), PagingData.empty())
+    @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
+    val users = state.value.payload.debounce { 250 }.flatMapLatest { payload ->
+        useCases.getSearchPaging(payload)
+    }.cachedIn(viewModelScope)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), PagingData.empty())
 
     fun onEvent(event: SearchEvent) {
         when (event) {
@@ -56,11 +66,11 @@ class SearchViewModel @Inject constructor(
 
             is SearchEvent.OnSearchChange -> {
                 state.update { it.copy(search = event.search) }
-//                debounce {
-//                    state.value.payload.update {
-//                        it.copy(search = event.search)
-//                    }
-//                }
+                debounce {
+                    state.value.payload.update {
+                        it.copy(search = event.search)
+                    }
+                }
             }
         }
     }

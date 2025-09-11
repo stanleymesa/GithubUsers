@@ -24,11 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
 import com.stanleymesa.core.enums.ScreenSize
-import com.stanleymesa.core.ui.theme.GreenBackgroundDark
-import com.stanleymesa.core.ui.theme.GreenTextDark
 import com.stanleymesa.core.ui.theme.LocalDimen
-import com.stanleymesa.core.ui.theme.onPrimaryContainerDark
-import com.stanleymesa.core.ui.theme.onPrimaryDark
 import com.stanleymesa.core.util.SnackbarState
 import com.stanleymesa.core.util.extentions.ifNullOrEmpty
 import com.stanleymesa.core.util.extentions.orResourceStringEmpty
@@ -43,9 +39,9 @@ fun DefaultSnackbar(
         val snackbarData = data.visuals as DefaultSnackbarVisuals
         val actionLabel = snackbarData.actionLabel
         val contentColor =
-            if (snackbarData.isSuccess) GreenTextDark else onPrimaryDark
+            if (snackbarData.isSuccess) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onErrorContainer
         val containerColor =
-            if (snackbarData.isSuccess) GreenBackgroundDark else onPrimaryContainerDark
+            if (snackbarData.isSuccess) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.errorContainer
         val actionComposable: (@Composable () -> Unit)? = if (actionLabel != null) {
             @Composable {
                 TextButton(

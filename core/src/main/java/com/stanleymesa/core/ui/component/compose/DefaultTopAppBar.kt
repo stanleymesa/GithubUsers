@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.stanleymesa.core.R
+import com.stanleymesa.core.util.extentions.isTrue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -23,25 +24,28 @@ fun DefaultTopAppBar(
     @StringRes titleId: Int = R.string.empty_string,
     title: String = "",
     actions: @Composable RowScope.() -> Unit = {},
+    canBack: Boolean = true,
     onBack: (() -> Unit)? = null
 ) {
     TopAppBar(
         modifier = modifier,
         title = { Text(text = title.ifEmpty { stringResource(id = titleId) }) },
         navigationIcon = {
-            IconButton(
-                onClick = {
-                    if (onBack != null) {
-                        onBack.invoke()
-                    } else {
-                        navHostController.navigateUp()
-                    }
-                },
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back"
-                )
+            if (canBack.isTrue()) {
+                IconButton(
+                    onClick = {
+                        if (onBack != null) {
+                            onBack.invoke()
+                        } else {
+                            navHostController.navigateUp()
+                        }
+                    },
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back"
+                    )
+                }
             }
         },
         actions = actions

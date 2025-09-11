@@ -1,4 +1,0 @@
-package com.stanleymesa.search_domain
-
-class sample {
-}

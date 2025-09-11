@@ -44,6 +44,8 @@ import androidx.core.graphics.toColorInt
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.stanleymesa.core.datastore.AppDataStoreKeys
@@ -339,4 +341,7 @@ fun String.encodeToBase64() = kotlin.io.encoding.Base64.encode(this.toByteArray(
 
 @OptIn(ExperimentalEncodingApi::class)
 fun String.decodeToString() = String(kotlin.io.encoding.Base64.decode(this.toByteArray()))
+
+fun <T : Any> getLoadStateError(lazyPagingItems: LazyPagingItems<T>) =
+    (lazyPagingItems.loadState.refresh as? LoadState.Error)?.error
 

@@ -3,9 +3,10 @@ package com.stanleymesa.core.di
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.stanleymesa.core.constant.AppConstants
 import com.stanleymesa.core.interceptor.AuthenticationInterceptor
-import com.stanleymesa.core.interceptor.TokenExpiredInterceptor
 import com.stanleymesa.core.interceptor.loggingInterceptor
 import com.stanleymesa.core.util.NetworkHelper
 import com.stanleymesa.core.util.extentions.dataStore
@@ -44,12 +45,15 @@ object CoreModule {
 
     @Singleton
     @Provides
+    fun provideMoshi(): Moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+
+    @Singleton
+    @Provides
     fun provideHttpClient(dataStore: DataStore<Preferences>) =
         OkHttpClient().newBuilder().connectTimeout(AppConstants.NETWORK_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(AppConstants.NETWORK_TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(AppConstants.NETWORK_TIMEOUT, TimeUnit.SECONDS)
-            .addInterceptor(AuthenticationInterceptor(dataStore))
-            .addInterceptor(TokenExpiredInterceptor(dataStore))
+            .addInterceptor(AuthenticationInterceptor())
             .addInterceptor(loggingInterceptor)
             .retryOnConnectionFailure(true).build()
 

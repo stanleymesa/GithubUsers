@@ -17,24 +17,11 @@ data class BaseResponse<T>(
 
 @JsonClass(generateAdapter = true)
 data class BaseListResponse<T>(
-    @Json(name = "code")
-    val code: Int? = null,
-    @Json(name = "error")
-    val error: Boolean = false,
-    @Json(name = "message")
-    val message: String? = null,
-    @Json(name = "data")
-    val data: List<T>? = null,
-    @Json(name = "arrayCount")
-    val arrayCount: Int? = null,
-    @Json(name = "totalItems")
-    val totalItems: Int? = null,
-    @Json(name = "pageSize")
-    val pageSize: Int? = null,
-    @Json(name = "isHasNextPage")
-    val isHasNextPage: Boolean? = null,
+    @Json(name = "total_count")
+    val totalCount: Int? = null,
+    @Json(name = "incomplete_results")
+    val incompleteResults: Boolean = false,
+    @Json(name = "items")
+    val items: List<T>? = null,
 )
 
-data class RefreshToken(
-    val access: String?
-)

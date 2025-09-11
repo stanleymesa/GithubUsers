@@ -16,6 +16,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
@@ -48,6 +49,7 @@ fun DefaultTextInput(
     trailingIcon: @Composable (() -> Unit)? = null,
     readOnly: Boolean = false,
     autoFocus: Boolean = false,
+    keyboardActions: KeyboardActions? = null,
     onDone: () -> Unit = {},
     onValueChange: (String) -> Unit = {}
 ) {
@@ -83,11 +85,10 @@ fun DefaultTextInput(
             keyboardType = inputType,
             imeAction = imeAction
         ),
-        keyboardActions = KeyboardActions(
-            onDone = {
-                focusManager.clearFocus()
-                onDone.invoke()
-            }
+        keyboardActions = keyboardActions ?: KeyboardActions(
+            onDone = { focusManager.clearFocus() },
+            onNext = { focusManager.moveFocus(FocusDirection.Down) },
+            onSearch = { focusManager.clearFocus() }
         ),
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon ?: if (inputType == KeyboardType.Password) {

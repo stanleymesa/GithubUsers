@@ -1,6 +1,10 @@
-def keyPropertiesFile = rootProject.file("app.properties")
 def keyProperties = new Properties()
+def keyPropertiesFile = rootProject.file("app.properties")
 keyProperties.load(new FileInputStream(keyPropertiesFile))
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file("local.properties")
+localProperties.load(new FileInputStream(localPropertiesFile))
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
@@ -26,6 +30,7 @@ android {
         }
         buildConfigField("int", "VERSION_CODE", keyProperties["app.version.code"])
         buildConfigField("String", "VERSION_NAME", "\"${keyProperties["app.version.name"]}\"")
+        buildConfigField("String", "GITHUB_API_TOKEN", "\"${localProperties["github.api.token"]}\"")
         buildConfigField("String", "APPLICATION_ID", "\"${AppConfig.moduleNameSpace}\"")
     }
 
