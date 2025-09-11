@@ -2,9 +2,14 @@ package com.stanleymesa.detail_presentation
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
+import com.stanleymesa.core.route.DetailRoute
 import com.stanleymesa.core.util.NetworkHelper
+import com.stanleymesa.core.util.extentions.loge
+import com.stanleymesa.core.util.extentions.toJsonPretty
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -19,7 +24,10 @@ class DetailViewModel @Inject constructor(
 //    private val useCases: AnnouncementUseCases,
     private val dataStore: DataStore<Preferences>,
     private val networkHelper: NetworkHelper,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    val route = savedStateHandle.toRoute<DetailRoute>()
 
     var state = MutableStateFlow(DetailState())
         private set
@@ -28,11 +36,9 @@ class DetailViewModel @Inject constructor(
     private var snackbarJob: Job? = null
     private var refreshJob: Job? = null
 
-//    @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
-//    val announcements = state.value.payload.debounce { 250 }.flatMapLatest { payload ->
-//        useCases.getAnnouncementPaging(payload)
-//    }.cachedIn(viewModelScope)
-//        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), PagingData.empty())
+    init {
+        loge("detail route = ${route.toJsonPretty()}")
+    }
 
     fun onEvent(event: DetailEvent) {
         when (event) {
@@ -56,11 +62,6 @@ class DetailViewModel @Inject constructor(
 
             is DetailEvent.OnSearchChange -> {
                 state.update { it.copy(search = event.search) }
-//                debounce {
-//                    state.value.payload.update {
-//                        it.copy(search = event.search)
-//                    }
-//                }
             }
         }
     }
@@ -85,12 +86,4 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    private fun handleRefreshNoInternet() {
-        refreshJob?.cancel()
-        refreshJob = viewModelScope.launch(Dispatchers.IO) {
-            onEvent(DetailEvent.SetRefreshing(true))
-            delay(1000L)
-            onEvent(DetailEvent.SetRefreshing(false))
-        }
-    }
 }
