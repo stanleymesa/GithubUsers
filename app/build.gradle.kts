@@ -17,13 +17,12 @@ if (propertiesFile.isFile) {
 }
 
 plugins {
-    alias(libs.plugins.com.android.application)
-    alias(libs.plugins.org.jetbrains.kotlin.android)
-    id("com.google.dagger.hilt.android")
-    id("kotlin-parcelize")
-    id("kotlin-kapt")
-    kotlin("plugin.serialization")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
 }
 
 android {
@@ -88,9 +87,6 @@ android {
         dataBinding = true
         buildConfig = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.kotlin.compiler.get()
-    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -117,7 +113,8 @@ dependencies {
     implementation(libs.timber)
     implementation(libs.appcompat)
     implementation(libs.fragment)
-    implementation(libs.gson)
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
     implementation(libs.kotlinx.serialization.core)
     implementation(libs.kotlinx.serialization.json)
 
@@ -136,10 +133,13 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
 
-//    implementation(projects.core)
-//    implementation(projects.features.main.mainData)
-//    implementation(projects.features.main.mainDomain)
-//    implementation(projects.features.main.mainPresentation)
+    implementation(projects.core)
+    implementation(projects.features.search.searchData)
+    implementation(projects.features.search.searchDomain)
+    implementation(projects.features.search.searchPresentation)
+    implementation(projects.features.detail.detailData)
+    implementation(projects.features.detail.detailDomain)
+    implementation(projects.features.detail.detailPresentation)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
