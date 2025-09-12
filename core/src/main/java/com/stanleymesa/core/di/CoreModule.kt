@@ -3,9 +3,14 @@ package com.stanleymesa.core.di
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.room.Room
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.stanleymesa.core.constant.AppConstants
+import com.stanleymesa.core.constant.AppConstants.APP_DATABASE
+import com.stanleymesa.core.database.AppDatabase
+import com.stanleymesa.core.database.dao.UserDao
+import com.stanleymesa.core.database.dao.UserReposDao
 import com.stanleymesa.core.interceptor.AuthenticationInterceptor
 import com.stanleymesa.core.interceptor.loggingInterceptor
 import com.stanleymesa.core.util.NetworkHelper
@@ -19,11 +24,6 @@ import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-/**
- * Created by fizhu on 23 December 2021
- * https://github.com/Fizhu
- */
-
 @Module
 @InstallIn(SingletonComponent::class)
 object CoreModule {
@@ -33,15 +33,19 @@ object CoreModule {
         context.dataStore
 
 
-//    @Singleton
-//    @Provides
-//    fun provideAppDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(
-//        context, AppDatabase::class.java, APP_DATABASE
-//    ).fallbackToDestructiveMigration().build()
-//
-//    @Provides
-//    @Singleton
-//    fun provideUserDao(userDatabase: UserDatabase): UserDao = userDatabase.userDao
+    @Singleton
+    @Provides
+    fun provideAppDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(
+        context, AppDatabase::class.java, APP_DATABASE
+    ).fallbackToDestructiveMigration(true).build()
+
+    @Provides
+    @Singleton
+    fun provideUserDao(appDatabase: AppDatabase): UserDao = appDatabase.userDao
+
+    @Provides
+    @Singleton
+    fun provideUserRepositoryDao(appDatabase: AppDatabase): UserReposDao = appDatabase.userReposDao
 
     @Singleton
     @Provides
@@ -62,14 +66,4 @@ object CoreModule {
     fun provideNetworkHelper(@ApplicationContext context: Context): NetworkHelper =
         NetworkHelper(context)
 
-//    @Singleton
-//    @Provides
-//    fun provideSharedLocalDataSource(
-//        appDatabase: AppDatabase,
-//        userDatabase: UserDatabase,
-//        userDao: UserDao,
-//        dataStore: DataStore<Preferences>
-//    ): SharedLocalDataSource = SharedLocalDataSource(
-//        appDatabase, userDatabase, userDao, dataStore
-//    )
 }

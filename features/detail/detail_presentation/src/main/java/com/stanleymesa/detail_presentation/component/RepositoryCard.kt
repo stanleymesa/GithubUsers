@@ -16,9 +16,11 @@ import androidx.compose.ui.res.painterResource
 import com.stanleymesa.core.R
 import com.stanleymesa.core.ui.component.compose.DefaultSpacer
 import com.stanleymesa.core.ui.theme.LocalDimen
+import com.stanleymesa.core.util.extentions.toFormattedCount
+import com.stanleymesa.detail_domain.model.UserRepos
 
 @Composable
-fun RepositoryCard(modifier: Modifier = Modifier) {
+fun RepositoryCard(modifier: Modifier = Modifier, userRepos: UserRepos) {
     Card(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -31,12 +33,14 @@ fun RepositoryCard(modifier: Modifier = Modifier) {
                 .fillMaxWidth()
                 .padding(LocalDimen.current.regular),
         ) {
-            Text("Github Users", style = MaterialTheme.typography.labelMedium)
-            DefaultSpacer(height = LocalDimen.current.default)
-            Text(
-                "This is the description of the repository, it can be quite long and should be handled with text overflow.",
-                style = MaterialTheme.typography.bodySmall
-            )
+            Text(userRepos.name, style = MaterialTheme.typography.labelMedium)
+            if (userRepos.description.isNotBlank()) {
+                DefaultSpacer(height = LocalDimen.current.default)
+                Text(
+                    userRepos.description,
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
             DefaultSpacer(height = LocalDimen.current.medium)
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -45,7 +49,10 @@ fun RepositoryCard(modifier: Modifier = Modifier) {
                         contentDescription = "",
                     )
                     DefaultSpacer(width = LocalDimen.current.small)
-                    Text("500", style = MaterialTheme.typography.bodySmall)
+                    Text(
+                        userRepos.stargazersCount.toFormattedCount(),
+                        style = MaterialTheme.typography.bodySmall
+                    )
                 }
                 DefaultSpacer(width = LocalDimen.current.regular)
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -54,7 +61,10 @@ fun RepositoryCard(modifier: Modifier = Modifier) {
                         contentDescription = "",
                     )
                     DefaultSpacer(width = LocalDimen.current.small)
-                    Text("500", style = MaterialTheme.typography.bodySmall)
+                    Text(
+                        userRepos.forksCount.toFormattedCount(),
+                        style = MaterialTheme.typography.bodySmall
+                    )
                 }
             }
         }

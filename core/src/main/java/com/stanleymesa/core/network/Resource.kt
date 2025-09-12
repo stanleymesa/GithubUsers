@@ -5,7 +5,7 @@ import com.stanleymesa.core.enums.NetworkState
 sealed class Resource<out T> constructor(
     val status: NetworkState,
     val message: String? = null,
-    val data: T? = null,
+    open val data: T? = null,
 ) {
 
     class Success<T>(data: T, message: String? = null) : Resource<T>(
@@ -14,10 +14,12 @@ sealed class Resource<out T> constructor(
         message = message
     )
 
-    data class Error<T>(val msg: String?, val extra: Any? = null) : Resource<T>(
-        status = NetworkState.ERROR,
-        message = if (msg?.contains("No address associated with hostname") == true) "Terjadi Kesalahan" else msg
-    )
+    data class Error<T>(val msg: String?, override val data: T? = null, val extra: Any? = null) :
+        Resource<T>(
+            status = NetworkState.ERROR,
+            message = if (msg?.contains("No address associated with hostname") == true) "Terjadi Kesalahan" else msg,
+            data = data
+        )
 
     class Unauthorized<T>(message: String?) : Resource<T>(
         status = NetworkState.UNAUTHORIZED, message = message

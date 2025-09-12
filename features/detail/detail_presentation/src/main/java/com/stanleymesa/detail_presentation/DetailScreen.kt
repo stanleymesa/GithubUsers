@@ -2,6 +2,7 @@ package com.stanleymesa.detail_presentation
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,7 +12,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -27,18 +32,23 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.stanleymesa.core.R
+import com.stanleymesa.core.ui.component.compose.DefaultEmptyState
 import com.stanleymesa.core.ui.component.compose.DefaultProgress
 import com.stanleymesa.core.ui.component.compose.DefaultSnackbar
 import com.stanleymesa.core.ui.component.compose.DefaultSpacer
 import com.stanleymesa.core.ui.component.compose.DefaultTopAppBar
 import com.stanleymesa.core.ui.component.compose.showDefaultSnackbar
 import com.stanleymesa.core.ui.theme.LocalDimen
+import com.stanleymesa.core.util.DateTimeHelper
+import com.stanleymesa.core.util.extentions.isFalse
 import com.stanleymesa.core.util.extentions.isTrue
 import com.stanleymesa.detail_presentation.component.FollowersSection
 import com.stanleymesa.detail_presentation.component.RepositoryCard
@@ -98,110 +108,173 @@ fun DetailScreen(
                 .fillMaxSize()
                 .padding(it)
         ) {
-            LazyColumn(
-                modifier = Modifier.fillMaxWidth(),
-                contentPadding = PaddingValues(LocalDimen.current.regular)
-            ) {
-                /** User Section */
-                item {
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        AsyncImage(
-                            modifier = Modifier
-                                .size(LocalDimen.current.extraLarge)
-                                .clip(CircleShape),
-                            model = "",
-                            placeholder = painterResource(R.drawable.ic_github),
-                            contentDescription = "",
-                        )
-                        DefaultSpacer()
-                        Text(
-                            text = "Stanley Mesa",
-                            style = MaterialTheme.typography.titleLarge.copy(fontSize = 24.sp),
-                            color = MaterialTheme.colorScheme.primary,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                        DefaultSpacer(height = LocalDimen.current.small)
-                        Text(
-                            text = "@stanleymesa",
-                            style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.secondary,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                        DefaultSpacer(height = LocalDimen.current.small)
-                        Text(
-                            text = "Joined 2018",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.secondary
-                        )
-                        DefaultSpacer(height = LocalDimen.current.medium)
-                        Text(
-                            text = "I post awesome Android stuff on my Instagram page @_philipplackner_ and on my YouTube channel Philipp Lackner.",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onBackground,
-                            textAlign = TextAlign.Center
-                        )
-                    }
-                }
-                /** Work Section */
-                item {
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        DefaultSpacer(height = LocalDimen.current.regular)
-                        UserRow(
-                            modifier = Modifier.fillMaxWidth(),
-                            icon = painterResource(R.drawable.ic_company),
-                            text = "Google"
-                        )
-                        DefaultSpacer(height = LocalDimen.current.default)
-                        UserRow(
-                            modifier = Modifier.fillMaxWidth(),
-                            icon = painterResource(R.drawable.ic_location),
-                            text = "Jakarta, Indonesia"
-                        )
-                        DefaultSpacer(height = LocalDimen.current.default)
-                        UserRow(
-                            modifier = Modifier.fillMaxWidth(),
-                            icon = painterResource(R.drawable.ic_mail),
-                            text = "stanleymesa2001@gmail.com"
-                        )
-                    }
-                }
-                /** Followers Section */
-                item {
-                    DefaultSpacer(height = LocalDimen.current.extraRegular)
-                    FollowersSection(modifier = Modifier.fillMaxWidth())
-                    DefaultSpacer(height = LocalDimen.current.regular)
-                }
-                /** Repository Header */
-                stickyHeader {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(MaterialTheme.colorScheme.surface)
-                            .padding(vertical = LocalDimen.current.regular)
-                    ) {
-                        Text("Repositories", style = MaterialTheme.typography.titleLarge)
-                    }
-                }
-                /** Repositories */
-                items(
-                    count = 20
+            if (state.user != null) {
+                LazyColumn(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding = PaddingValues(LocalDimen.current.regular)
                 ) {
-                    RepositoryCard(
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    if (it < 19) {
-                        DefaultSpacer(height = LocalDimen.current.medium)
+                    /** User Section */
+                    item {
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                        ) {
+                            AsyncImage(
+                                modifier = Modifier
+                                    .size(120.dp)
+                                    .clip(CircleShape),
+                                model = state.user.avatarUrl,
+                                placeholder = painterResource(R.drawable.ic_github),
+                                contentDescription = "",
+                            )
+                            if (state.user.name.isNotBlank()) {
+                                DefaultSpacer()
+                                Text(
+                                    text = state.user.name,
+                                    style = MaterialTheme.typography.titleLarge.copy(fontSize = 24.sp),
+                                    color = MaterialTheme.colorScheme.primary,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
+                            DefaultSpacer(height = LocalDimen.current.small)
+                            Text(
+                                text = "@${state.user.login}",
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.secondary,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                            DefaultSpacer(height = LocalDimen.current.small)
+                            Text(
+                                text = "Joined ${
+                                    DateTimeHelper.parse(
+                                        date = state.user.createdAt,
+                                        format_awal = DateTimeHelper.FORMAT_yyyy_MM_dd_T_HHmmssZ,
+                                        format_akhir = DateTimeHelper.FORMAT_DATE_ONLY_YEAR
+                                    )
+                                }",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.secondary
+                            )
+                            if (state.user.bio.isNotBlank()) {
+                                DefaultSpacer(height = LocalDimen.current.medium)
+                                Text(
+                                    text = state.user.bio,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onBackground,
+                                    textAlign = TextAlign.Center,
+                                    maxLines = 3,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
+                        }
+                    }
+                    /** Work Section */
+                    item {
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                        ) {
+                            if (state.user.company.isNotBlank()) {
+                                DefaultSpacer(height = LocalDimen.current.regular)
+                                UserRow(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    icon = painterResource(R.drawable.ic_company),
+                                    text = state.user.company
+                                )
+                            }
+                            if (state.user.location.isNotBlank()) {
+                                DefaultSpacer(height = LocalDimen.current.default)
+                                UserRow(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    icon = painterResource(R.drawable.ic_location),
+                                    text = state.user.location
+                                )
+                            }
+                            if (state.user.email.isNotBlank()) {
+                                DefaultSpacer(height = LocalDimen.current.default)
+                                UserRow(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    icon = painterResource(R.drawable.ic_mail),
+                                    text = state.user.email
+                                )
+                            }
+                        }
+                    }
+                    /** Followers Section */
+                    item {
+                        state.user.let { user ->
+                            DefaultSpacer(height = LocalDimen.current.extraRegular)
+                            FollowersSection(modifier = Modifier.fillMaxWidth(), user = user)
+                            DefaultSpacer(height = LocalDimen.current.extraRegular)
+                        }
+                    }
+                    /** Repository Header */
+                    stickyHeader {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(MaterialTheme.colorScheme.surface)
+                                .padding(
+                                    top = LocalDimen.current.default,
+                                    bottom = LocalDimen.current.regular
+                                )
+                        ) {
+                            Text(
+                                stringResource(R.string.repositories),
+                                style = MaterialTheme.typography.titleLarge
+                            )
+                        }
+                    }
+                    /** Repositories */
+                    if (state.userRepos.isNotEmpty()) {
+                        itemsIndexed(
+                            items = state.userRepos,
+                            key = { _, repo -> repo.id }
+                        ) { index, repo ->
+                            RepositoryCard(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .animateItem(),
+                                userRepos = repo
+                            )
+                            if (index < state.userRepos.size - 1) {
+                                DefaultSpacer(height = LocalDimen.current.medium)
+                            }
+                        }
+                    } else {
+                        if (state.isLoading.isFalse()) {
+                            item {
+                                DefaultSpacer()
+                                DefaultEmptyState(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    icon = Icons.Outlined.Search,
+                                    title = stringResource(R.string.user_repos_empty_title),
+                                    message = stringResource(R.string.user_repos_empty_subtitle),
+                                )
+                            }
+                        }
+                    }
+
+                }
+            } else {
+                /** If user is null */
+                if (state.isLoading.isFalse()) {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                    ) {
+                        DefaultEmptyState(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 120.dp),
+                            icon = Icons.Outlined.Person,
+                            title = stringResource(R.string.search_placeholder_empty_title),
+                            message = stringResource(R.string.search_placeholder_empty_subtitle),
+                        )
                     }
                 }
-
             }
 
             if (state.isLoading.isTrue()) {
