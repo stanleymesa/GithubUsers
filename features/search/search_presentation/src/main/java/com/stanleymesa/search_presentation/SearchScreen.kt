@@ -30,6 +30,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
 import com.stanleymesa.core.R
+import com.stanleymesa.core.route.DetailRoute
 import com.stanleymesa.core.shared_data.model.User
 import com.stanleymesa.core.ui.component.compose.BoxWithSwipeRefresh
 import com.stanleymesa.core.ui.component.compose.DefaultEmptyState
@@ -225,7 +226,9 @@ fun SearchScreen(
                                         .fillMaxWidth()
                                         .animateItem(),
                                     user = user
-                                )
+                                ) { data ->
+                                    navHostController.navigate(DetailRoute(username = data.login))
+                                }
                                 if (index < lazyPagingItems.itemCount.minus(1)) {
                                     DefaultSpacer(height = LocalDimen.current.medium)
                                 }

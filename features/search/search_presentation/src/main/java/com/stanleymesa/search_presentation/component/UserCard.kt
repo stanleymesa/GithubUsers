@@ -24,12 +24,14 @@ import com.stanleymesa.core.ui.component.compose.DefaultSpacer
 import com.stanleymesa.core.ui.theme.LocalDimen
 
 @Composable
-fun UserCard(modifier: Modifier = Modifier, user: User) {
+fun UserCard(modifier: Modifier = Modifier, user: User, onClick: (User) -> Unit) {
     Card(modifier = modifier) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable {}
+                .clickable {
+                    onClick.invoke(user)
+                }
                 .padding(
                     horizontal = LocalDimen.current.regular,
                     vertical = LocalDimen.current.medium

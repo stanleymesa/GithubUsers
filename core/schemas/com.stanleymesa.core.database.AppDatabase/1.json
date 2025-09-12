@@ -2,77 +2,232 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "44c225bb9b9c45cd404c5e7d09ab5359",
+    "identityHash": "17e879fec6ae984f9a1ec7e6b30d9d3b",
     "entities": [
       {
-        "tableName": "OilSelectionDataEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `iodine` REAL, `ins` REAL, `sap` REAL, `totalSaponifiable` REAL, `breakdown` TEXT NOT NULL, `properties` TEXT NOT NULL, `saturated` TEXT NOT NULL, `selected` INTEGER NOT NULL, `weight` REAL NOT NULL, `percentage` REAL NOT NULL, PRIMARY KEY(`id`))",
+        "tableName": "UserEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `twitterUsername` TEXT NOT NULL, `bio` TEXT NOT NULL, `createdAt` TEXT NOT NULL, `login` TEXT NOT NULL, `blog` TEXT NOT NULL, `publicGists` INTEGER NOT NULL, `privateGists` INTEGER NOT NULL, `totalPrivateRepos` INTEGER NOT NULL, `followers` INTEGER NOT NULL, `avatarUrl` TEXT NOT NULL, `updatedAt` TEXT NOT NULL, `htmlUrl` TEXT NOT NULL, `following` INTEGER NOT NULL, `name` TEXT NOT NULL, `collaborators` INTEGER NOT NULL, `company` TEXT NOT NULL, `location` TEXT NOT NULL, `ownedPrivateRepos` INTEGER NOT NULL, `publicRepos` INTEGER NOT NULL, `email` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "twitterUsername",
+            "columnName": "twitterUsername",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bio",
+            "columnName": "bio",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "login",
+            "columnName": "login",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "blog",
+            "columnName": "blog",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "publicGists",
+            "columnName": "publicGists",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "privateGists",
+            "columnName": "privateGists",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "totalPrivateRepos",
+            "columnName": "totalPrivateRepos",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "followers",
+            "columnName": "followers",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "avatarUrl",
+            "columnName": "avatarUrl",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updatedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "htmlUrl",
+            "columnName": "htmlUrl",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "following",
+            "columnName": "following",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "collaborators",
+            "columnName": "collaborators",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "company",
+            "columnName": "company",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "location",
+            "columnName": "location",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ownedPrivateRepos",
+            "columnName": "ownedPrivateRepos",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "publicRepos",
+            "columnName": "publicRepos",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "email",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "UserReposEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `fork` INTEGER NOT NULL, `fullName` TEXT NOT NULL, `updatedAt` TEXT NOT NULL, `stargazersCount` INTEGER NOT NULL, `pushedAt` TEXT NOT NULL, `name` TEXT NOT NULL, `description` TEXT NOT NULL, `createdAt` TEXT NOT NULL, `language` TEXT NOT NULL, `watchersCount` INTEGER NOT NULL, `forksCount` INTEGER NOT NULL, `owner_login` TEXT NOT NULL, `owner_id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fork",
+            "columnName": "fork",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fullName",
+            "columnName": "fullName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updatedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "stargazersCount",
+            "columnName": "stargazersCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pushedAt",
+            "columnName": "pushedAt",
             "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "name",
             "columnName": "name",
-            "affinity": "TEXT"
-          },
-          {
-            "fieldPath": "iodine",
-            "columnName": "iodine",
-            "affinity": "REAL"
-          },
-          {
-            "fieldPath": "ins",
-            "columnName": "ins",
-            "affinity": "REAL"
-          },
-          {
-            "fieldPath": "sap",
-            "columnName": "sap",
-            "affinity": "REAL"
-          },
-          {
-            "fieldPath": "totalSaponifiable",
-            "columnName": "totalSaponifiable",
-            "affinity": "REAL"
-          },
-          {
-            "fieldPath": "breakdown",
-            "columnName": "breakdown",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "properties",
-            "columnName": "properties",
+            "fieldPath": "description",
+            "columnName": "description",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "saturated",
-            "columnName": "saturated",
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "selected",
-            "columnName": "selected",
+            "fieldPath": "language",
+            "columnName": "language",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "watchersCount",
+            "columnName": "watchersCount",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "weight",
-            "columnName": "weight",
-            "affinity": "REAL",
+            "fieldPath": "forksCount",
+            "columnName": "forksCount",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "percentage",
-            "columnName": "percentage",
-            "affinity": "REAL",
+            "fieldPath": "owner.login",
+            "columnName": "owner_login",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "owner.id",
+            "columnName": "owner_id",
+            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -86,7 +241,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '44c225bb9b9c45cd404c5e7d09ab5359')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '17e879fec6ae984f9a1ec7e6b30d9d3b')"
     ]
   }
 }

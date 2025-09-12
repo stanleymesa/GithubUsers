@@ -11,10 +11,6 @@ import java.util.concurrent.TimeUnit
 import java.util.regex.Pattern
 
 
-/**
- * Created by fizhu on 05,June,2020
- * Hvyz.anbiya@gmail.com
- */
 object DateTimeHelper {
     const val FORMAT_DATE_DMY = "dd-MM-yyyy"
     const val FORMAT_DATE_DMYHM = "dd-MM-yyyy HH:mm"
@@ -23,6 +19,7 @@ object DateTimeHelper {
     const val FORMAT_DATE_DMY_LONG_MONTH = "dd-MMMM-yyyy"
     const val FORMAT_DATE_DM_SHORT_MONTH_NO_SEPARATOR = "dd MMM"
     const val FORMAT_DATE_ONLY_MONTH = "MMMM"
+    const val FORMAT_DATE_ONLY_YEAR = "yyyy"
     const val FORMAT_DATE_DMY_LONG_MONTH_NO_SEPARATOR = "dd MMMM yyyy"
     const val FORMAT_DATE_DMY_SHORT_MONTH_NO_SEPARATOR = "dd MMM yyyy"
     const val FORMAT_DATE_DMY_SLASH = "dd/MMMM/yyyy"

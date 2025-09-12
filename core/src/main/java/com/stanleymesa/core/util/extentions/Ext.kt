@@ -1,5 +1,6 @@
 package com.stanleymesa.core.util.extentions
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -344,4 +345,58 @@ fun String.decodeToString() = String(kotlin.io.encoding.Base64.decode(this.toByt
 
 fun <T : Any> getLoadStateError(lazyPagingItems: LazyPagingItems<T>) =
     (lazyPagingItems.loadState.refresh as? LoadState.Error)?.error
+
+/**
+ * Formats an integer into a human-readable string with metric prefixes (K, M, B, T).
+ * This is similar to how follower counts are displayed on Instagram.
+ *
+ * - Numbers less than 1000 are returned as is.
+ * - Numbers from 1,000 to 9,999 are formatted to one decimal place (e.g., "1.2K").
+ * - Numbers from 10,000 upwards are formatted as whole numbers (e.g., "10K", "123K", "1.5M").
+ * - The function handles millions (M), billions (B), and trillions (T).
+ *
+ * @return The formatted string representation of the number.
+ */
+fun Int.toFormattedCount(): String {
+    val num = this.toDouble()
+    return when {
+        // Handle Trillions
+        num >= 1_000_000_000_000 -> formatValue(num / 1_000_000_000_000, "T")
+        // Handle Billions
+        num >= 1_000_000_000 -> formatValue(num / 1_000_000_000, "B")
+        // Handle Millions
+        num >= 1_000_000 -> formatValue(num / 1_000_000, "M")
+        // Handle Thousands
+        num >= 1_000 -> formatValue(num / 1_000, "K")
+        // Handle numbers less than 1000
+        else -> this.toString()
+    }
+}
+
+/**
+ * A helper function to format the number based on its value.
+ * If the value is a whole number (e.g., 10.0), it's displayed as an integer ("10K").
+ * If the value is less than 10 (e.g., 1.25), it's displayed with one decimal place ("1.2K").
+ * If the value is 10 or greater with a decimal (e.g., 10.5), it's displayed as an integer ("10K").
+ *
+ * @param value The number to format (already divided by the appropriate power of 1000).
+ * @param suffix The metric suffix to append (K, M, B, T).
+ * @return The formatted string.
+ */
+@SuppressLint("DefaultLocale")
+private fun formatValue(value: Double, suffix: String): String {
+    // Check if the number is effectively a whole number (e.g., 10.0)
+    // We use a small epsilon for floating-point comparison.
+    return if (kotlin.math.abs(value - value.toInt()) < 0.001) {
+        String.format("%d%s", value.toInt(), suffix)
+    }
+    // If number is less than 10, format with one decimal place (e.g., 1.2K, 9.9K)
+    else if (value < 10) {
+        String.format("%.1f%s", value, suffix)
+    }
+    // If number is 10 or greater, format as an integer (e.g., 10K, 123K)
+    else {
+        String.format("%d%s", value.toInt(), suffix)
+    }
+}
 
