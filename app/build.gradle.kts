@@ -140,8 +140,10 @@ dependencies {
     implementation(projects.features.detail.detailData)
     implementation(projects.features.detail.detailDomain)
     implementation(projects.features.detail.detailPresentation)
+    implementation(projects.features.settings.settingsPresentation)
 
     testImplementation(libs.junit)
+    testImplementation(projects.sharedTest)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.compose.bom))

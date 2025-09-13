@@ -11,6 +11,9 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -31,6 +34,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
 import com.stanleymesa.core.R
 import com.stanleymesa.core.route.DetailRoute
+import com.stanleymesa.core.route.SettingsRoute
 import com.stanleymesa.core.shared_data.model.User
 import com.stanleymesa.core.ui.component.compose.BoxWithSwipeRefresh
 import com.stanleymesa.core.ui.component.compose.DefaultEmptyState
@@ -155,7 +159,14 @@ fun SearchScreen(
                 modifier = Modifier.fillMaxWidth(),
                 navHostController = navHostController,
                 titleId = R.string.app_name,
-                canBack = false
+                canBack = false,
+                actions = {
+                    IconButton(onClick = {
+                        navHostController.navigate(SettingsRoute)
+                    }) {
+                        Icon(Icons.Outlined.Settings, contentDescription = "")
+                    }
+                }
             )
         },
         bottomBar = {

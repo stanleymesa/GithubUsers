@@ -50,12 +50,6 @@ class MainViewModel @Inject constructor(
 
     private var snackbarJob: Job? = null
 
-//    init {
-//        viewModelScope.launch {
-//            delay(1400L)
-//            _isSplashDone.value = true
-//        }
-//    }
 
     fun onEvent(event: MainEvent) {
         when (event) {
@@ -70,6 +64,11 @@ class MainViewModel @Inject constructor(
             }
 
             is MainEvent.ResetSnackbar -> resetSnackbar(event.isDelay)
+            is MainEvent.ShowNotificationPermissionDialog -> state.update {
+                it.copy(
+                    showNotificationPermissionDialog = Pair(event.isShow, event.isRationale)
+                )
+            }
         }
     }
 

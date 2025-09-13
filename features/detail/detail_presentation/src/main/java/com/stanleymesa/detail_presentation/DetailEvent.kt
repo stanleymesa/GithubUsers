@@ -8,5 +8,6 @@ sealed class DetailEvent {
     data class ResetSnackbar(val isDelay: Boolean = true) : DetailEvent()
     data class SetLoading(val isLoading: Boolean) : DetailEvent()
     data class SetRefreshing(val isRefreshing: Boolean) : DetailEvent()
+    data class GetUser(val username: String) : DetailEvent()
 
 }

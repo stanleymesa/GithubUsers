@@ -22,14 +22,14 @@ fun UserRow(modifier: Modifier = Modifier, icon: Painter, text: String) {
     ) {
         Icon(
             painter = icon,
-            tint = MaterialTheme.colorScheme.tertiary,
+            tint = MaterialTheme.colorScheme.primary,
             contentDescription = ""
         )
         DefaultSpacer(width = LocalDimen.current.medium)
         Text(
             text = text,
             style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.tertiary,
+            color = MaterialTheme.colorScheme.primary,
             textAlign = TextAlign.Center,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis

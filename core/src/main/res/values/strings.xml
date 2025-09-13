@@ -6,6 +6,7 @@
     <string name="icon">Icon</string>
     <string name="on">On</string>
     <string name="off">Off</string>
+    <string name="settings">Settings</string>
     <string name="dark_mode">Dark Mode</string>
     <string name="tampilan">Appearance</string>
     <string name="something_went_wrong_please_try_again">Something went wrong, please try again</string>
@@ -26,4 +27,6 @@
     <string name="gists">Gists</string>
     <string name="followers">Followers</string>
     <string name="following">Following</string>
+    <string name="notification_permission">Notification Permission Required</string>
+    <string name="notification_permission_desc">We are required to obtain notification permission to get the latest information updates from notifications.</string>
 </resources>

@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.stanleymesa.core.util.NetworkHelper
-import com.stanleymesa.core.util.extentions.loge
 import com.stanleymesa.search_domain.use_case.SearchUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

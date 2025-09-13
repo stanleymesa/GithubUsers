@@ -4,6 +4,7 @@ import com.stanleymesa.core.network.Resource
 import com.stanleymesa.core.shared_data.mapper.UserMapper.toDomainModel
 import com.stanleymesa.core.shared_data.mapper.UserMapper.toEntity
 import com.stanleymesa.core.shared_data.model.User
+import com.stanleymesa.core.util.DateTimeHelper
 import com.stanleymesa.core.util.NetworkHelper
 import com.stanleymesa.detail_data.datasource.local.DetailLocalDataSource
 import com.stanleymesa.detail_data.datasource.remote.DetailRemoteDataSource
@@ -64,6 +65,12 @@ class DetailRepositoryImpl @Inject constructor(
                         localDataSource.upsertAllUserRepos(data.map { it.toEntity() })
                         userRepos =
                             localDataSource.getUserRepos(username).map { it.toDomainModel() }
+                                .sortedByDescending {
+                                    DateTimeHelper.parse(
+                                        it.updatedAt,
+                                        DateTimeHelper.FORMAT_yyyy_MM_dd_T_HHmmssZ
+                                    ).time
+                                }
                     }
                 }
 
@@ -74,6 +81,12 @@ class DetailRepositoryImpl @Inject constructor(
         }.getOrElse {
             val userRepos =
                 localDataSource.getUserRepos(username).map { repo -> repo.toDomainModel() }
+                    .sortedByDescending { repo ->
+                        DateTimeHelper.parse(
+                            repo.updatedAt,
+                            DateTimeHelper.FORMAT_yyyy_MM_dd_T_HHmmssZ
+                        ).time
+                    }
             emit(Resource.Error(msg = it.message, data = userRepos))
         }
     }
