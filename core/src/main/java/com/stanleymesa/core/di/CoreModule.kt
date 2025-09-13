@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.room.Room
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.stanleymesa.core.constant.AppConstants
@@ -53,12 +54,13 @@ object CoreModule {
 
     @Singleton
     @Provides
-    fun provideHttpClient(dataStore: DataStore<Preferences>) =
+    fun provideHttpClient(dataStore: DataStore<Preferences>, @ApplicationContext context: Context) =
         OkHttpClient().newBuilder().connectTimeout(AppConstants.NETWORK_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(AppConstants.NETWORK_TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(AppConstants.NETWORK_TIMEOUT, TimeUnit.SECONDS)
             .addInterceptor(AuthenticationInterceptor())
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(ChuckerInterceptor(context))
             .retryOnConnectionFailure(true).build()
 
     @Singleton

@@ -26,4 +26,6 @@
     <string name="gists">Gists</string>
     <string name="followers">Followers</string>
     <string name="following">Following</string>
+    <string name="notification_permission">Notification Permission Required</string>
+    <string name="notification_permission_desc">We are required to obtain notification permission to get the latest information updates from notifications.</string>
 </resources>
