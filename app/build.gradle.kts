@@ -142,6 +142,7 @@ dependencies {
     implementation(projects.features.detail.detailPresentation)
 
     testImplementation(libs.junit)
+    testImplementation(projects.sharedTest)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.compose.bom))

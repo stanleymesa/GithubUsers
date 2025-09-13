@@ -1,4 +1,4 @@
-package com.stanleymesa.detail_domain
+package com.stanleymesa.shared_test
 
 import org.junit.Test
 

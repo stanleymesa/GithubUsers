@@ -33,6 +33,7 @@
             <option value="$PROJECT_DIR$/features/search/search_data" />
             <option value="$PROJECT_DIR$/features/search/search_domain" />
             <option value="$PROJECT_DIR$/features/search/search_presentation" />
+            <option value="$PROJECT_DIR$/shared-test" />
           </set>
         </option>
       </GradleProjectSettings>

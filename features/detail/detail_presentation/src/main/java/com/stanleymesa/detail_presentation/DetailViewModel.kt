@@ -17,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -61,7 +62,7 @@ class DetailViewModel @Inject constructor(
             is DetailEvent.SetLoading -> state.update { it.copy(isLoading = event.isLoading) }
 
             is DetailEvent.SetRefreshing -> state.update { it.copy(isRefreshing = event.isRefreshing) }
-
+            is DetailEvent.GetUser -> getUser(event.username)
         }
     }
 
