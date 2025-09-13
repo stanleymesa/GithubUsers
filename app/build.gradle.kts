@@ -140,6 +140,7 @@ dependencies {
     implementation(projects.features.detail.detailData)
     implementation(projects.features.detail.detailDomain)
     implementation(projects.features.detail.detailPresentation)
+    implementation(projects.features.settings.settingsPresentation)
 
     testImplementation(libs.junit)
     testImplementation(projects.sharedTest)

@@ -38,6 +38,7 @@ import com.stanleymesa.core.util.extentions.isFalse
 import com.stanleymesa.core.util.extentions.openAppSettings
 import com.stanleymesa.githubusers.route.detailRoute
 import com.stanleymesa.githubusers.route.searchRoute
+import com.stanleymesa.githubusers.route.settingsRoute
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -105,6 +106,7 @@ class MainActivity : ComponentActivity() {
                         ) {
                             searchRoute(navController)
                             detailRoute(navController)
+                            settingsRoute(navController)
                         }
 
                         /** Show Notification Permission Dialog */

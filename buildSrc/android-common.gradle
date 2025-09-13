@@ -101,6 +101,7 @@ dependencies {
 
     // Third-party libraries
     implementation(libs.material)
+    implementation(libs.compose.material.icon)
     implementation(libs.coil)
     implementation(libs.timber)
     implementation(libs.hilt.navigation.compose)
