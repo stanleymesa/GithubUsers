@@ -72,7 +72,7 @@ The app requires a GitHub Personal Access Token to make API calls. You can gener
 * Add the following line to the file, replacing `ghp_your_token` with the token you copied:
 `github.api.token=ghp_your_token`
 
-### 4. Sync and Run*
+### 4. Sync and Run
 
 * Open the project in Android Studio.
 
