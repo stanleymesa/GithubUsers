@@ -9,4 +9,5 @@ dependencies {
     "implementation"(libs.compose.paging)
     "implementation"(libs.coilSvg)
     "implementation"(libs.material)
+    "implementation"(libs.compose.constraintlayout)
 }

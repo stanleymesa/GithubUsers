@@ -36,6 +36,7 @@ import com.stanleymesa.core.ui.theme.GithubTheme
 import com.stanleymesa.core.util.extentions.hasPermissions
 import com.stanleymesa.core.util.extentions.isFalse
 import com.stanleymesa.core.util.extentions.openAppSettings
+import com.stanleymesa.githubusers.route.briRoute
 import com.stanleymesa.githubusers.route.detailRoute
 import com.stanleymesa.githubusers.route.searchRoute
 import com.stanleymesa.githubusers.route.settingsRoute
@@ -107,6 +108,7 @@ class MainActivity : ComponentActivity() {
                             searchRoute(navController)
                             detailRoute(navController)
                             settingsRoute(navController)
+                            briRoute(navController)
                         }
 
                         /** Show Notification Permission Dialog */

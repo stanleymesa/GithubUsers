@@ -1,5 +1,6 @@
 package com.stanleymesa.core.ui.component.compose
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
@@ -22,8 +23,10 @@ fun DefaultButton(
     buttonSize: ButtonSize = ButtonSize.MEDIUM,
     text: String,
     prefixIcon: ImageVector? = null,
-    contentHorizontalPadding: Dp = if (prefixIcon == null) LocalDimen.current.extraRegular else LocalDimen.current.regular,
+    suffixIcon: ImageVector? = null,
+    contentHorizontalPadding: Dp = if (prefixIcon == null && suffixIcon == null) LocalDimen.current.extraRegular else LocalDimen.current.regular,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
+    border: BorderStroke? = null,
     enabled: Boolean = true,
     onClick: () -> Unit
 ) {
@@ -38,6 +41,7 @@ fun DefaultButton(
             },
         ),
         colors = colors,
+        border = border,
         enabled = enabled,
         onClick = onClick
     ) {
@@ -52,7 +56,6 @@ fun DefaultButton(
                         ButtonSize.LARGE -> LocalDimen.current.extraRegular
                     }
                 ),
-                tint = MaterialTheme.colorScheme.onPrimary
             )
             DefaultSpacer(width = LocalDimen.current.default)
         }
@@ -63,8 +66,19 @@ fun DefaultButton(
                 ButtonSize.LARGE -> MaterialTheme.typography.labelLarge
             }
         )
-        if (prefixIcon != null) {
+        if (suffixIcon != null) {
             DefaultSpacer(width = LocalDimen.current.default)
+            Icon(
+                imageVector = suffixIcon,
+                contentDescription = "",
+                modifier = Modifier.size(
+                    when (buttonSize) {
+                        ButtonSize.SMALL -> LocalDimen.current.regular
+                        ButtonSize.MEDIUM -> 20.dp
+                        ButtonSize.LARGE -> LocalDimen.current.extraRegular
+                    }
+                ),
+            )
         }
     }
 }

@@ -60,7 +60,7 @@ object CoreModule {
             .writeTimeout(AppConstants.NETWORK_TIMEOUT, TimeUnit.SECONDS)
             .addInterceptor(AuthenticationInterceptor())
             .addInterceptor(loggingInterceptor)
-            .addInterceptor(ChuckerInterceptor(context))
+//            .addInterceptor(ChuckerInterceptor(context))
             .retryOnConnectionFailure(true).build()
 
     @Singleton

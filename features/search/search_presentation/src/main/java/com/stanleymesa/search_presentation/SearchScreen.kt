@@ -33,8 +33,8 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
 import com.stanleymesa.core.R
+import com.stanleymesa.core.route.BriRoute
 import com.stanleymesa.core.route.DetailRoute
-import com.stanleymesa.core.route.SettingsRoute
 import com.stanleymesa.core.shared_data.model.User
 import com.stanleymesa.core.ui.component.compose.BoxWithSwipeRefresh
 import com.stanleymesa.core.ui.component.compose.DefaultEmptyState
@@ -162,7 +162,10 @@ fun SearchScreen(
                 canBack = false,
                 actions = {
                     IconButton(onClick = {
-                        navHostController.navigate(SettingsRoute)
+                        // TODO uncomment this
+//                        navHostController.navigate(SettingsRoute)
+
+                        navHostController.navigate(BriRoute)
                     }) {
                         Icon(Icons.Outlined.Settings, contentDescription = "")
                     }
