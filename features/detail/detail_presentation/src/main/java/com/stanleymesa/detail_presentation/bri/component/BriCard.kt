@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.stanleymesa.core.ui.component.compose.DefaultSpacer
 import com.stanleymesa.core.ui.theme.LocalDimen
 import com.stanleymesa.core.ui.theme.LocalShapes
@@ -51,10 +52,12 @@ fun BriCard(modifier: Modifier = Modifier) {
 
             /** Bank */
             Column(
-                modifier = Modifier.constrainAs(status) {
+                modifier = Modifier.constrainAs(bank) {
                     top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
                     start.linkTo(card.end, margin = 12.dp)
                     end.linkTo(status.start, margin = 12.dp)
+                    width = Dimension.fillToConstraints
                 },
             ) {
                 Text("Kartu Debit BRI")
@@ -66,7 +69,7 @@ fun BriCard(modifier: Modifier = Modifier) {
 
             /** Status */
             Column(
-                modifier = Modifier.constrainAs(bank) {
+                modifier = Modifier.constrainAs(status) {
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
                     end.linkTo(parent.end)

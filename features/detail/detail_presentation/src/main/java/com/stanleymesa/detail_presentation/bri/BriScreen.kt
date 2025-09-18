@@ -88,7 +88,6 @@ fun BriScreen(
     Scaffold(
         modifier = Modifier.safeDrawingPadding(),
         topBar = {
-            // todo center title
             DefaultTopAppBar(
                 modifier = Modifier.fillMaxWidth(),
                 navHostController = navHostController,
@@ -247,6 +246,7 @@ fun BriScreen(
                 }
                 DefaultSpacer(height = LocalDimen.current.default)
             }
+            /** End Header */
 
             /** Transaction List */
             LazyColumn(
